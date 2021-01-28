@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos JavaScript</title>
+</head>
+<body>
+    <h1>Fundamentos de JavaScript 2</h1>
+    <script>
+    console.log("******************FUNCIONES*****************")
+     /*Las funciones tambien se consideran objetos, estas son muy poderosas
+     se puede retornar como valores, se puede pasar por argumento, hay 2 formas de declrar
+     funciones: funciones declaradas y funciones expresadas.*/
+
+
+     /*Funcion declarada*/
+    function estoEsUnaFuncion(){
+         console.log("Uno");
+         console.log("Dos");
+         console.log("Tres");
+         return "Soy lo que me retorno el metodo";
+    }
+    /*NOTA: NodeJS es un interprete*/
+    let funcion =estoEsUnaFuncion();
+    console.log(funcion);
+
+    function saludar(nombre, edad){/*por default: nombre="Desconocido, edad=0, de lo contrario saldría undefined"*/
+        console.log(`Mi nombre es ${nombre} y tengo ${edad} años`);
+    }
+    saludar("Javier", 27);
+    
+    
+    /*Funciones declaradas VS Funciones expresadas*/
+
+    funcionDeclarada();/*Esto lo permite porque hace hoisting*/
+
+    function funcionDeclarada(){
+        console.log(`Esto es una funcion declarada, puede
+        invocarse en cualquier parte de nuestro codigo,
+        incluso antes de que la funcion sea declarada.`);
+    }
+
+    funcionDeclarada();
+
+    //funcionExpresada(); /*No lo permite porque estoy invocando antes de la inicializacion*/
+    const funcionExpresada = function(){/*funcion anonima,*/
+        console.log(`Esto es una funcion expresada, es
+        decir, una funcion que se le ha asignado con valor
+        a una variable, si invocamos esta funcion antes de
+        su definicion JS nos dirá...`);
+    }
+
+    funcionExpresada();
+
+    console.log("******************ARREGLOS (ARRAYS)*****************")
+
+   const e = [];
+   const f = [1, true, "Hola", ["A","B","C",[1,2,3]]];
+   console.log(e);
+   console.log(f);
+   console.log("La longitud es:",f.length);
+   console.log(f[2]);
+   console.log(f[3][3][1]);
+
+   const g = Array.of("X","Y","Z",9,8,7);/*Con ECMAC6, Array.of nos permite llenar elementos*/
+   console.log(g);
+
+   const h = Array(100).fill(false);
+   console.log(h);
+
+   const i = new Array(1,2,3,true,false);/*Ya ha caido en desuso utilizar los constructores*/
+   console.log(i);
+
+   const colors = ["Red","Purple","Green","Silver"];
+   console.log(colors);
+   
+    colors.pop();/*Extre el ultimo: Silver*/
+
+    console.log(colors);
+
+    colors.forEach(function(el, index, otros){
+        console.log(`<li id="${index}">${el}</li>`);
+    });
+
+    console.log("******************OBJETOS*****************")
+
+    let a =new String("Hola");
+    let b = "Hola";
+    console.log(a);//String {"Hola"}
+    console.log(b);//Hola
+    //Para Javascript el {} es un objeto, mientras que [] es un array
+
+    const jon = {
+        nombre:"jon",
+        apellido:"Mircha",
+        Edad:35,
+        Pasatiempos:["Correr","Hacer ejercicio","Dar clases"],
+        soltero: false,
+        contacto:{
+            email:"jonmircha@gmail.com",
+            twitter:"@jonmircha",
+            movil:"546543213"
+        },
+        saludas:function(){
+            console.log("Hola :)")
+        },
+        decirMiNombre:function(){
+            console.log(`Hola me llamo ${this.nombre}`);
+        }
+    }
+    console.log(jon);
+    console.log(jon.apellido);//<--- la notacion más utilizada
+    console.log(jon["apellido"]);
+    console.log(jon["Pasatiempos"][0]);//Imprime Correr
+    console.log(jon["contacto"]["email"]);
+    console.log(jon.saludas);//de esta manera se imprime la funcion mas no se ejecuta
+    jon.decirMiNombre();
+    console.log(Object.keys(jon));//Lista todas las lleves del objeto
+    console.log(Object.values(jon));
+    console.log(jon.hasOwnProperty("nombre"))/*tiene una propiedad que se llama nombre?true*/
+
+    console.log("******************OPERADORES*****************")
+    /*Aritmeticos: + - * / % 0*/
+    let c =5+(5-10)*3;
+    let modulo = 5%2/*% residuo*/
+
+    console.log(c)/*-10*/
+    console.log(modulo);/*1*/
+
+    /*Relacionales
+    >, <, >=, <=, ==, ===, !=, !==*/
+
+    console.log(8>9);
+    /*= 1 Igual es asignacion de variable
+    ==2 iguales es comparacion de valores
+    === 3 iguales es comparacion de tipo de dato y de valor*/
+
+    console.log(7 === 7);/*true*/
+    console.log("7"===7)/*false*/
+
+    /*Incremento Decremento*/
+    let y=1;
+    y=y+2;
+
+    /*Operadores unario*/
+    y++;
+    y--;
+    ++y;
+    --y;
+    console.log(y)
+
+    /*Operadores logicos
+    !-Not
+    ||-Or
+    &&-And
+    */
+
+    console.log("******************ESTRUCTURAS DE CONTROL*****************")
+    
+    /*if-else*/
+
+    /*Operador ternario*/
+    let edad = 18
+    let eresMayor = (edad >=18)?"Eres mayor de edad":"Eres menor de edad"
+    console.log(eresMayor);
+
+    /*For in <--Permite recorrer propiedades de un objeto*/
+    const jav ={
+        nombre:"Javier",
+        apellido:"Arias",
+        edad:35
+    }
+
+    for(const  propiedad in jav){
+        console.log(`Key:${propiedad},Value:${jav[propiedad]}`)
+    }
+
+    /*For of <--Permite recorrer todos los elementos de cualquier objeto que sea iterable*/
+    let numeros = [1,2,3,4,5,6,7,8,9]
+    for(const elemento of numeros ){
+        console.log(elemento)
+    }
+
+    console.log("******************EXCEPCIONES*****************")
+    try {
+        let numero = "x";
+        if(isNaN(numero)){
+            throw new Error("El caracter introducido no es un número") 
+        }
+        console.log("resultado: ",numero*numero)
+    } catch (error){
+        console.log("captura el error: ",error)
+    }finally{
+        console.log("El bloque finally se ejecutará siempre al final, siempre se ejecuta halla o no: ")
+    }
+    
+    console.log("******************break o continue*****************")
+    const numeros = [1,2,3,4,5,6,7,8,9,0];
+    
+    for (let i=0; i<numeros.length; i++){
+        
+        if(i===5){
+            continue;/*se salta la iteración*/
+        }
+        console.log(numeros[i])
+    }
+   </script>
+
+    
+
+ 
+
+</body>
+</html>

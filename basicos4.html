@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos JavaScript</title>
+</head>
+<body>
+    <h1>Fundamentos de JavaScript 4</h1>
+    <script>
+    console.log("****************** POO *****************")//El azucar sintactico de las clases de JS desde 2015
+
+    //Funcion constructora
+    function Carro(marca, modelo){
+        this.marca=marca;
+        this.modelo=modelo;
+        this.encendido=function(){
+            console.log("tengo 3 encendidos");
+        }
+
+        this.sonido=function(){
+            console.log("Full sonido")
+        }
+    }
+
+    const subaru =new Carro("Subaru",2021), opel=new Carro("Opel",2019) ;
+
+    console.log(subaru);
+    subaru.encendido()
+    subaru.sonido()
+    console.log(opel);
+    opel.encendido()
+    opel.sonido()
+    
+     /*Cuando se crean funciones constructoras de las cuales queremos crear prototipos,
+    lo ideal es que las funciones solo tengas los atributos y los metodos esten por fuera, para que se
+    puedan pegar al prototipo*/
+
+    //Funcion constructora2
+    function Car(marca, modelo){
+        this.marca=marca;
+        this.modelo=modelo;
+    }
+
+    /*De esta manera no se estarían duplicando los metodos para cada uno de los objetos que se crean, 
+    no están colgados como tal al objeto*/
+    Car.prototype.encendido=function(){
+            console.log(`${this.marca} tiene 3 encendidos`);
+    }
+
+    Car.prototype.sonido=function(){
+            console.log(`${this.marca} Full sonido`)
+    }
+
+    const ferrari =new Car("Ferrari",2021), lamborhini=new Car("Lamborghini",2019) ;
+
+
+    console.log(ferrari);
+    ferrari.encendido()
+    ferrari.sonido()
+    console.log(lamborhini);
+    lamborhini.encendido()
+    lamborhini.sonido()
+
+    console.log("****************** Herencia, Metodos estaticos *****************");
+
+    class voiture{
+
+        constructor(marca, modelo){
+            this.marca=marca;
+            this.modelo=modelo;
+        }
+    
+        seguridad(){
+            console.log(`${this.marca} tiene 4 airbags`);
+        }
+
+        puertas(){
+            console.log(`${this.marca} Tiene 2 puertas`);
+        }
+    }
+
+    class camioneta extends voiture{
+        constructor(marca, modelo, trasscion){
+            super(marca, modelo);
+            this.trasscion=trasscion;
+            this.precio=14000
+        }
+
+        puertas(){/*Override*/
+            console.log(`${this.marca} Tiene 4 puertas y remolque`)
+        }
+
+        trasccionLlantas(){
+            console.log(`${this.marca} es una ${this.trasscion}`)
+        }
+
+        static referenciaCamioneta(){
+            console.log(`La referencia de la camioneta es: XXXXXXXX`)
+        }
+
+        /*Getter and setter*/
+        get getPrecio(){
+            return this.precio;
+        }
+
+        set setPrecio(nuevo){
+            this.precio=nuevo
+        }
+
+    }
+
+    const tesla = new voiture("Tesla","2018");
+    console.log(tesla)
+    tesla.seguridad();
+    tesla.puertas();
+
+    const toyota = new camioneta("Toyota","2020","4x4");
+    console.log(toyota)
+    toyota.seguridad();
+    toyota.puertas();
+    toyota.trasccionLlantas();
+    
+
+    camioneta.referenciaCamioneta();/*Esto es un metodo estatico*/
+
+    /*Lo de privado o protegido no existe en JS*/
+
+    console.log(toyota.getPrecio);/*Para llamar la funcion toca llamarla como un atributo*/
+    toyota.setPrecio=25000;
+    console.log(toyota.getPrecio);
+
+    console.log("****************** Metodos de console *****************");
+
+    console.log(console);
+    console.error("Esto es un error");
+    console.warn("Esto es un aviso");
+    console.log("esto es un mensaje informativo");
+
+    let name="Javier", lastname="Arias", age=27;
+    
+    console.group("Esto es un grupo!!!!");
+    console.log(name, lastname, age);
+    console.log(`%s %s %d`,name, lastname, age);
+    console.log(window);
+    console.log(document);
+    console.dir(window);
+    console.dir(document);
+    //console.clear();
+    console.groupEnd();
+
+    console.table(Object.entries(console).sort())
+
+    const numeros = [1,2,3,4,5], vocales=["a","e","i","o","u"];
+
+    console.table(numeros)
+    console.table(vocales)
+
+    const material={
+        nombre:"Plastico",
+        peso:27,
+        densidad:12
+    }
+
+    console.table(material);
+   
+    console.time("Cuanto tiempo tarda mi codigo");
+    const arreglo = Array(10000);
+
+    for (let i=0; i<arreglo.length; i++){
+        //console.count("Soy un contador, soy usado para contar numeros de conexiones, o numero de peticiones etc")
+        arreglo[i]=i;
+    }
+
+    console.timeEnd("Cuanto tiempo tarda mi codigo");
+
+
+    let x =3, y=2, pruebaxy="Se espera que X siempre sea menor que Y";
+
+    console.assert(x<y,{x,y,pruebaxy});
+
+    console.log("****************** Date() *****************");
+
+    let fecha=new Date();
+    console.log(fecha);
+    console.log(fecha.getDate());
+    console.log(fecha.getDay());
+    console.log(fecha.getMonth());/*0-enero ...*/
+    console.log(fecha.getFullYear());
+    console.log(fecha.getHours());
+    console.log(fecha.getMinutes());
+    console.log(fecha.getSeconds());
+    console.log(fecha.getMilliseconds());
+    console.log(fecha.toString());
+    console.log(fecha.toDateString());
+    console.log(fecha.toLocaleDateString());
+    console.log(fecha.toLocaleTimeString());
+    console.log(fecha.getTimezoneOffset());
+    console.log(Date.now());
+    let cumplejav= new Date(1993,9,17);
+    console.log(cumplejav);
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+   </script>
+
+    
+
+ 
+
+</body>
+</html>

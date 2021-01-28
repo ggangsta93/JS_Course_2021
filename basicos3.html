@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos JavaScript</title>
+</head>
+<body>
+    <h1>Fundamentos de JavaScript 3</h1>
+    <script>
+    console.log("******************Destructuración*****************")
+        
+    const numeros = [1,2,3];
+    let [one, two, three] = numeros;
+    console.log(one, two, three)
+
+    let persona = {
+        nombre:"Javier",
+        apellido:"Arias",
+        edad:27
+    }
+
+    let {nombre, apellido, edad} = persona;
+    console.log(nombre, apellido, edad);
+
+    console.log("******************Objetos literales*****************")
+    
+    /*nueva forma de escribir atributos y metodos, incluso de asignarlos*/
+    let name="Hony", age=3;
+
+    const mascota={
+        name:name,
+        age:age,
+        habilidad:function(){
+            console.log("Jugar Basketball")
+        }
+    }
+
+    console.log(mascota)
+
+    const mascota2 = {/*Esta es la nueva forma de declarar objetos*/
+        name,
+        age,
+        habilidad(){
+            console.log("Jugar Basketball")
+        }
+    }
+
+    console.log(mascota2)
+    mascota2.habilidad()
+    
+    console.log("******************Parametros REST*****************")
+    
+    function sumar(a,b,...c){
+        let resultado = a+b
+
+        c.forEach(function(n){
+            resultado +=n
+        });
+        return resultado
+    }
+
+    console.log(sumar(1,2,3))
+    console.log(sumar(1,2,3,4))
+    console.log(sumar(1,2,3,4,5,6,7,8,9))
+
+    const arr1 = [1,2,3,4,5],arr2=[6,7,8,9,0];
+
+    console.log(arr1,arr2)
+
+    const arr3 = [...arr1,...arr2];/*operador de propagacion "..."*/
+    console.log(arr3);
+
+
+    console.log("******************Funciones flecha - arrow functions*****************")
+    /*Una nueva forma de escribir una funcion anonima*/
+
+    const saludo = ()=>{
+        console.log(`Hola`)/*cuando solo se tiene una linea se pueden omitir las llaves*/
+    }
+
+    const saludar = (nombre)=> console.log(`Hola ${nombre}`)/*cuando tiene un parametro se puede omitr los parentesis*/
+
+    saludar("Javier")
+
+    const sum = (a,b)=>a+b;
+    console.log(sum(9,8));
+
+    const numbers = [1,2,3,4,5,6,7,8,9]
+
+    numbers.forEach((el, index)=>console.log(`${el} está en la posicion ${index}`));
+
+    function cat(){
+        console.log(this);
+    }
+
+    const michi={
+        nombre:"tatta",
+        sonido:function(){
+            console.log(this)
+        },
+        sonido2:()=>{/*en las funciones flecha ignoran el contexto donde se encuentran, en este caso ignora el objeto y reconoce a windows*/
+            console.log(this)
+        }
+    }
+
+    michi.sonido();
+    michi.sonido2();
+
+    console.log("****************** Prototipos *****************")
+
+    function Animal(nombre, genero){
+        this.nombre = nombre;
+        this.genero = genero;
+    }
+
+    /*Métodos agregados al prototipo de la funcion
+    constructora*/
+
+    Animal.prototype.sonar=function(){
+        console.log("Hago sonidos porque estoy vivo.")
+    }
+
+    Animal.prototype.saluda=function(){
+        console.log(`Hola me llamo ${this.nombre}`)
+    }
+
+    /*Herencia prototipica*/
+    function Dog(nombre, genero, tamanio){
+        this.super = Animal;
+        this.super(nombre, genero);
+        this.tamanio=tamanio;
+    }
+
+    /*Dog está heredando de Animal*/
+    Dog.prototype =new Animal();
+    Dog.prototype.constructor = Dog;
+
+    /*Sobreescritura de métodos del Protipo padre en el hijo*/
+
+    Dog.prototype.sonar=function(){
+        console.log("Soy un perro y mi sonido es un ladrido");
+    }
+
+    Dog.prototype.ladrar=function(){
+        console.log("Guaaaaau Guaaaaaau...");
+    }
+
+    const snoopy =new Dog("Snopy","Macho","Mediano");
+    const lolaBunny =new Animal("Lola bunny","Hembra");
+
+    console.log(snoopy);
+    console.log(lolaBunny);
+
+    snoopy.sonar();
+    snoopy.ladrar();
+    snoopy.saluda();
+    lolaBunny.saluda();
+
+    console.log("****************** POO *****************")//El azucar sintactico de las clases de JS desde 2015
+
+    //Funcion constructora
+    function Carro(marca, modelo){
+        this.marca=marca;
+        this.modelo=modelo;
+        this.encendido=function(){
+            console.log("tengo 3 encendidos");
+        }
+
+        this.sonido=function(){
+            console.log("Full sonido")
+        }
+    }
+
+    const subaru =new Carro("Subaru",2021), opel=new Carro("Opel",2019) ;
+
+    console.log(subaru);
+    subaru.encendido()
+    subaru.sonido()
+    console.log(opel);
+    opel.encendido()
+    opel.sonido()
+    
+     /*Cuando se crean funciones constructoras de las cuales queremos crear prototipos,
+    lo ideal es que las funciones solo tengas los atributos y los metodos esten por fuera, para que se
+    puedan pegar al prototipo*/
+
+    //Funcion constructora2
+    function Car(marca, modelo){
+        this.marca=marca;
+        this.modelo=modelo;
+    }
+
+    /*De esta manera no se estarian duplicando los metodos para cada uno de los objetos que se crean, 
+    no están colgados como tal al objeto*/
+    Car.prototype.encendido=function(){
+            console.log(`${this.marca} tiene 3 encendidos`);
+    }
+
+    Car.prototype.sonido=function(){
+            console.log(`${this.marca} Full sonido`)
+    }
+
+    const ferrari =new Car("Ferrari",2021), lamborhini=new Car("Lamborghini",2019) ;
+
+
+    console.log(ferrari);
+    ferrari.encendido()
+    ferrari.sonido()
+    console.log(lamborhini);
+    lamborhini.encendido()
+    lamborhini.sonido()
+
+   </script>
+
+</body>
+</html>

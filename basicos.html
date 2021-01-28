@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos JavaScript</title>
+</head>
+<body>
+    <h1>Fundamentos de JavaScript 1</h1>
+    <script>
+    console.log("******************VAR Y LET*****************");
+    
+    /*
+    El ambito de bloque no existia en JavaScript
+    Javascript declaraba las variables como globales
+    eso se llama elevacion o "hoisting" en ingles
+    */
+    var hola = "Esto es un hola"/*ambito global, es mala practica*/
+    let hello="This is a hello";/*Ambito de bloque*/
+    console.log(hola);
+    console.log(hello);
+    console.log(window);/* window es el objeto que mapea toda la pantalla para javascript */  
+    console.log(window.hola)
+    console.log(window.hello)/*En este me imprimirá undefined porque solo se usa en el ambito donde se ha definido*/
+    
+
+    var musica_var = "Rock";
+    console.log("Variable musica antes del bloque:",musica_var)//rock
+    {
+        var musica_var = "pop";
+        console.log("Variable musica antes del bloque:", musica_var);//pop
+    }
+    console.log("Variable musica antes del bloque:",musica_var)//Pop
+
+    /*
+    Aquí javascript hace hoisting, var se declararía fuera del bloque
+    si musica_var fuera con let imprimiría rock pop rock
+    Así como el objeto global en el FRONT de javascript es window, el objeto global en BACK en nodeJS es global 
+    */
+    
+    console.log("******************CONSTANTES*****************");
+
+    /*const nos permite crear variables*/
+    const PI = 3.1416;
+    console.log(PI);
+    //const loko;  /*al valor primitivo no se puede dejar vacio, con let y var si deja*/
+
+    /*Una constante no funciona de la misma manera para valores primitivos
+    como para valores compuestos */
+   
+    let objeto ={/*Un objeto es una colección de atributos y valores*/
+        nombre:"jhon",
+        edad:35
+    }
+
+    let colores = ["blanco","negro","azul"]/*Arreglo*/
+
+    console.log(objeto);
+    console.log(colores);
+
+    objeto.correo="apedro@unicauca.edu.co";/*doble comilla está más estandarizado*/
+    colores.push('anaranjado');
+
+    console.log(objeto);
+    console.log(colores);
+    /*
+    Tanto "objeto" como "colores" cuando el tipo de dato se pone const, si deja cambiar sus valores y adicionar
+    esto es porque estos dos son tipos compuestos
+    object={}
+    array=[]
+    function(){}
+    Class{}
+    */
+
+    console.log("******************CADENAS DE TEXTO*****************");
+
+    /*MDN es la documentacion no oficial de Mozilla de Javascript*/
+    let nombre = "Javier";
+    let apellido = "Arias";
+    let saludo = new String("Hola mundillo");
+    let lorem = "lorem ipsum, dolor sit amet consectetur";
+    console.log(nombre, apellido, saludo)
+    console.log("la longitud de saludo es: ",saludo.length)
+    console.log(nombre.toUpperCase())/*Mayuscula*/
+    console.log(lorem.includes("ipsum"))/*Retorna un true*/
+    console.log(lorem.split(" "))/*Arreglo*/
+
+    console.log("******************Template String (``)*****************");
+    let nombre1 = "Javier";
+    let apellido2 = "Arias";
+
+    let saludo2 ="Hola mi nombre es: "+nombre1+" "+apellido2+".";
+    console.log(saludo2);
+
+    saludo2=`Hello, my name is: ${nombre} ${apellido}`;
+    console.log(saludo2);
+
+    /*Las templates String `` me respeta, la identacion, saltos y demás, mientras que "",me aparece error */
+    let ul ="<ul><li>Primavera</li><li>Verano</li><li>Otoño</li></ul>"
+    let ul2 = `
+    <ul>
+        <li>Primavera</li>
+        <li>Verano</li>
+        <li>Otoño</li>
+    </ul>
+    `;
+    console.log(ul);
+    console.log(ul2)
+
+    console.log("******************NUMEROS (NUMBERS)*****************");
+
+    let a = 2;
+    let b = new Number(1);
+    let c = 7.19;
+    let d = "5.6";
+
+    console.log("tipo de la variable d: ",typeof(d));
+    console.log(a,"<->",b,"<->",c);
+    console.log(c.toFixed(1));/*Imprime: 7.2*/
+    console.log(parseInt(c));/*Imprime la parte entera: 7*/
+
+    console.log(c+d);/*Lo concatena: 7.195.6   */
+    console.log(c+parseInt(d));/*Imprime: 12.419*/
+    /*Es recomendable usar librerias para manejo de números, tiene sus dolencias el JavaScript*/
+
+    console.log("******************BOOLEANS*****************");
+    let verdadero = true;
+    let falso = false;
+
+    console.log(verdadero, typeof verdadero);/*true "boolean"*/
+    console.log(Boolean(0));/*Cero es un valor que tiende a false*/
+    console.log(Boolean(-7));/*Cero es un valor que tiende a true*/
+    /*Cualquier cadena de texto tiene a true, más info https://developer.mozilla.org/es/docs/Glossary/Truthy */
+
+    console.log("******************UNDEFINED, NULL Y NAN*****************");
+
+    /*Tanto Undefined como null van a representar un valor ausente, 
+    o sea una variable que no tiene valor.
+    undefined es una variable que no ha sido inicializada es decir por ejemplo.*/
+
+    /*undefined indica que no se ha inicializado una variable y que el valor está ausente*/
+    let indefinida;
+    console.log(indefinida)
+    
+    /*null es un valor especial que indica la ausencia de un valor, este es puesto por el programador mientras que el otro lo pone JavaScript*/
+    let nulo = null;
+    console.log(nulo)
+
+    /*Nan--Not a Number*/
+    let noEsUnNumero = "hola"*3.7;
+    console.log(noEsUnNumero)
+
+    console.log("******************FUNCIONES*****************");
+     /*Las funciones tambien se consideran objetos, estas son muy poderosas
+     se puede retornar como valores, se puede pasar por argumento, hay 2 formas de declarar
+     funciones: funciones declaradas y funciones expresadas.*/
+
+
+     /*Funcion declarada*/
+    function estoEsUnaFuncion(){
+         console.log("Uno");
+         console.log("Dos");
+         console.log("Tres");
+         return "Soy lo que me retorne el metodo";
+    }
+    
+    /*NOTA: NodeJS es un interprete*/
+    let funcion =estoEsUnaFuncion();
+    console.log("---------")
+    console.log("Se imprime la funcion: ",funcion);
+    console.log("---------")
+
+    function saludar(nombre, edad){/*por default: nombre="Desconocido, edad=0, de lo contrario saldría undefined"*/
+        console.log(`Mi nombre es ${nombre} y tengo ${edad} años`);
+    }
+    saludar("Javier", 27);
+    
+    
+    /*Funciones declaradas VS Funciones expresadas*/
+
+    funcionDeclarada();/*Esto lo permite porque hace hoisting*/
+
+    function funcionDeclarada(){
+        console.log(`Esto es una funcion declarada, puede
+        invocarse en cualquier parte de nuestro codigo,
+        incluso antes de que la funcion sea declarada.`);
+    }
+
+    funcionDeclarada();
+
+    //funcionExpresada(); /*No lo permite porque estoy invocando antes de la inicializacion*/
+    const funcionExpresada = function(){/*funcion anonima,*/
+        console.log(`Esto es una funcion expresada, es
+        decir, una funcion que se le ha asignado con valor
+        a una variable, si invocamos esta funcion antes de
+        su definicion JS nos dirá...`);
+    }
+
+    funcionExpresada();
+
+    console.log("******************ARREGLOS (ARRAYS)*****************");
+
+   
+   const e = [];
+   const f = [1, true, "Hola", ["A","B","C",[1,2,3]]];
+   console.log(e);
+   console.log(f);
+   console.log("La longitud es:",f.length);//4
+   console.log(f[2]);//Hola
+   console.log(f[3][3][1]);//2
+
+   const g = Array.of("X","Y","Z",9,8,7);/*Con ECMAC6, Array.of nos permite llenar elementos*/
+   console.log("constante g: ",g);
+
+   const h = Array(100).fill(false);
+   console.log("constante h: ",h);
+
+   const i = new Array(1,2,3,true,false);/*Ya ha caido en desuso utilizar los constructores*/
+   console.log("constante i: ",i);
+
+   const colors = ["Red","Purple","Green","Silver"];
+   console.log(colors);
+   
+    colors.pop();/*Extrae el ultimo: Silver*/
+
+    console.log(colors);
+
+    colors.forEach(function(el, index, otros){
+        console.log(`<li id="${index}">${el}</li>`);
+    });
+   </script>
+
+</body>
+</html>
